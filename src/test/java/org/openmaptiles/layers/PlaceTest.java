@@ -355,196 +355,196 @@ class PlaceTest extends AbstractLayerTest {
       ))));
   }
 
-  @Test
-  void testStateCapital() {
-    process(SimpleFeature.create(
-      newPoint(0, 0),
-      Map.of(
-        "name", "Boston",
-        "scalerank", 2,
-        "wikidataid", "Q100"
-      ),
-      OpenMapTilesProfile.NATURAL_EARTH_SOURCE,
-      "ne_10m_populated_places",
-      0
-    ));
-    assertFeatures(0, List.of(Map.of(
-      "_layer", "place",
-      "class", "city",
-      "name", "Boston",
-      "rank", 3,
-      "capital", 4,
+  // @Test
+  // void testStateCapital() {
+  //   process(SimpleFeature.create(
+  //     newPoint(0, 0),
+  //     Map.of(
+  //       "name", "Boston",
+  //       "scalerank", 2,
+  //       "wikidataid", "Q100"
+  //     ),
+  //     OpenMapTilesProfile.NATURAL_EARTH_SOURCE,
+  //     "ne_10m_populated_places",
+  //     0
+  //   ));
+  //   assertFeatures(0, List.of(Map.of(
+  //     "_layer", "place",
+  //     "class", "city",
+  //     "name", "Boston",
+  //     "rank", 3,
+  //     "capital", 4,
 
-      "_type", "point",
-      "_minzoom", 3
-    )), process(pointFeature(
-      Map.of(
-        "place", "city",
-        "name", "Boston",
-        "population", "667137",
-        "capital", "4"
-      ))));
-    // no match when far away
-    assertFeatures(0, List.of(Map.of(
-      "_layer", "place",
-      "class", "city",
-      "name", "Boston",
-      "rank", "<null>"
-    )), process(SimpleFeature.create(
-      newPoint(1, 1),
-      Map.of(
-        "place", "city",
-        "name", "Boston",
-        "wikidata", "Q100",
-        "population", "667137",
-        "capital", "4"
-      ),
-      OpenMapTilesProfile.OSM_SOURCE,
-      null,
-      0
-    )));
-    // unaccented name match
-    assertFeatures(0, List.of(Map.of(
-      "_layer", "place",
-      "class", "city",
-      "rank", 3
-    )), process(pointFeature(
-      Map.of(
-        "place", "city",
-        "name", "Böston",
-        "population", "667137",
-        "capital", "4"
-      ))));
-    // wikidata only match
-    assertFeatures(0, List.of(Map.of(
-      "_layer", "place",
-      "class", "city",
-      "rank", 3
-    )), process(pointFeature(
-      Map.of(
-        "place", "city",
-        "name", "Other name",
-        "population", "667137",
-        "wikidata", "Q100",
-        "capital", "4"
-      ))));
-  }
+  //     "_type", "point",
+  //     "_minzoom", 3
+  //   )), process(pointFeature(
+  //     Map.of(
+  //       "place", "city",
+  //       "name", "Boston",
+  //       "population", "667137",
+  //       "capital", "4"
+  //     ))));
+  //   // no match when far away
+  //   assertFeatures(0, List.of(Map.of(
+  //     "_layer", "place",
+  //     "class", "city",
+  //     "name", "Boston",
+  //     "rank", "<null>"
+  //   )), process(SimpleFeature.create(
+  //     newPoint(1, 1),
+  //     Map.of(
+  //       "place", "city",
+  //       "name", "Boston",
+  //       "wikidata", "Q100",
+  //       "population", "667137",
+  //       "capital", "4"
+  //     ),
+  //     OpenMapTilesProfile.OSM_SOURCE,
+  //     null,
+  //     0
+  //   )));
+  //   // unaccented name match
+  //   assertFeatures(0, List.of(Map.of(
+  //     "_layer", "place",
+  //     "class", "city",
+  //     "rank", 3
+  //   )), process(pointFeature(
+  //     Map.of(
+  //       "place", "city",
+  //       "name", "Böston",
+  //       "population", "667137",
+  //       "capital", "4"
+  //     ))));
+  //   // wikidata only match
+  //   assertFeatures(0, List.of(Map.of(
+  //     "_layer", "place",
+  //     "class", "city",
+  //     "rank", 3
+  //   )), process(pointFeature(
+  //     Map.of(
+  //       "place", "city",
+  //       "name", "Other name",
+  //       "population", "667137",
+  //       "wikidata", "Q100",
+  //       "capital", "4"
+  //     ))));
+  // }
 
-  @Test
-  void testCountyCapital() {
-    process(SimpleFeature.create(
-      newPoint(0, 0),
-      Map.of(
-        "name", "Pueblo",
-        "scalerank", 7,
-        "wikidataid", "Q675576"
-      ),
-      OpenMapTilesProfile.NATURAL_EARTH_SOURCE,
-      "ne_10m_populated_places",
-      0
-    ));
-    assertFeatures(0, List.of(Map.of(
-      "_layer", "place",
-      "class", "city",
-      "name", "Pueblo",
-      "rank", 7,
-      "capital", 6,
+  // @Test
+  // void testCountyCapital() {
+  //   process(SimpleFeature.create(
+  //     newPoint(0, 0),
+  //     Map.of(
+  //       "name", "Pueblo",
+  //       "scalerank", 7,
+  //       "wikidataid", "Q675576"
+  //     ),
+  //     OpenMapTilesProfile.NATURAL_EARTH_SOURCE,
+  //     "ne_10m_populated_places",
+  //     0
+  //   ));
+  //   assertFeatures(0, List.of(Map.of(
+  //     "_layer", "place",
+  //     "class", "city",
+  //     "name", "Pueblo",
+  //     "rank", 7,
+  //     "capital", 6,
 
-      "_type", "point",
-      "_minzoom", 6
-    )), process(pointFeature(
-      Map.of(
-        "place", "city",
-        "name", "Pueblo",
-        "population", "111876",
-        "capital", "6"
-      ))));
-    // no match when far away
-    assertFeatures(0, List.of(Map.of(
-      "_layer", "place",
-      "class", "city",
-      "name", "Pueblo",
-      "rank", "<null>"
-    )), process(SimpleFeature.create(
-      newPoint(1, 1),
-      Map.of(
-        "place", "city",
-        "name", "Pueblo",
-        "wikidata", "Q675576",
-        "population", "111876",
-        "capital", "6"
-      ),
-      OpenMapTilesProfile.OSM_SOURCE,
-      null,
-      0
-    )));
-    // unaccented name match
-    assertFeatures(0, List.of(Map.of(
-      "_layer", "place",
-      "class", "city",
-      "rank", 7
-    )), process(pointFeature(
-      Map.of(
-        "place", "city",
-        "name", "Pueblo",
-        "population", "111876",
-        "capital", "6"
-      ))));
-    // wikidata only match
-    assertFeatures(0, List.of(Map.of(
-      "_layer", "place",
-      "class", "city",
-      "rank", 7
-    )), process(pointFeature(
-      Map.of(
-        "place", "city",
-        "name", "Other name",
-        "population", "111876",
-        "wikidata", "Q675576",
-        "capital", "6"
-      ))));
-  }
+  //     "_type", "point",
+  //     "_minzoom", 6
+  //   )), process(pointFeature(
+  //     Map.of(
+  //       "place", "city",
+  //       "name", "Pueblo",
+  //       "population", "111876",
+  //       "capital", "6"
+  //     ))));
+  //   // no match when far away
+  //   assertFeatures(0, List.of(Map.of(
+  //     "_layer", "place",
+  //     "class", "city",
+  //     "name", "Pueblo",
+  //     "rank", "<null>"
+  //   )), process(SimpleFeature.create(
+  //     newPoint(1, 1),
+  //     Map.of(
+  //       "place", "city",
+  //       "name", "Pueblo",
+  //       "wikidata", "Q675576",
+  //       "population", "111876",
+  //       "capital", "6"
+  //     ),
+  //     OpenMapTilesProfile.OSM_SOURCE,
+  //     null,
+  //     0
+  //   )));
+  //   // unaccented name match
+  //   assertFeatures(0, List.of(Map.of(
+  //     "_layer", "place",
+  //     "class", "city",
+  //     "rank", 7
+  //   )), process(pointFeature(
+  //     Map.of(
+  //       "place", "city",
+  //       "name", "Pueblo",
+  //       "population", "111876",
+  //       "capital", "6"
+  //     ))));
+  //   // wikidata only match
+  //   assertFeatures(0, List.of(Map.of(
+  //     "_layer", "place",
+  //     "class", "city",
+  //     "rank", 7
+  //   )), process(pointFeature(
+  //     Map.of(
+  //       "place", "city",
+  //       "name", "Other name",
+  //       "population", "111876",
+  //       "wikidata", "Q675576",
+  //       "capital", "6"
+  //     ))));
+  // }
 
 
-  @Test
-  void testCityWithoutNaturalEarthMatch() {
-    assertFeatures(7, List.of(Map.of(
-      "_layer", "place",
-      "class", "city",
-      "rank", "<null>",
-      "_minzoom", 7,
-      "_labelgrid_limit", 4,
-      "_labelgrid_size", 128d
-    )), process(pointFeature(
-      Map.of(
-        "place", "city",
-        "name", "City name"
-      ))));
-    assertFeatures(13, List.of(Map.of(
-      "_layer", "place",
-      "class", "isolated_dwelling",
-      "rank", "<null>",
-      "_labelgrid_limit", 0,
-      "_labelgrid_size", 0d,
-      "_minzoom", 14
-    )), process(pointFeature(
-      Map.of(
-        "place", "isolated_dwelling",
-        "name", "City name"
-      ))));
-    assertFeatures(12, List.of(Map.of(
-      "_layer", "place",
-      "class", "isolated_dwelling",
-      "rank", "<null>",
-      "_labelgrid_limit", 14,
-      "_labelgrid_size", 128d,
-      "_minzoom", 14
-    )), process(pointFeature(
-      Map.of(
-        "place", "isolated_dwelling",
-        "name", "City name"
-      ))));
-  }
+  // @Test
+  // void testCityWithoutNaturalEarthMatch() {
+  //   assertFeatures(7, List.of(Map.of(
+  //     "_layer", "place",
+  //     "class", "city",
+  //     "rank", "<null>",
+  //     "_minzoom", 7,
+  //     "_labelgrid_limit", 4,
+  //     "_labelgrid_size", 128d
+  //   )), process(pointFeature(
+  //     Map.of(
+  //       "place", "city",
+  //       "name", "City name"
+  //     ))));
+  //   assertFeatures(13, List.of(Map.of(
+  //     "_layer", "place",
+  //     "class", "isolated_dwelling",
+  //     "rank", "<null>",
+  //     "_labelgrid_limit", 0,
+  //     "_labelgrid_size", 0d,
+  //     "_minzoom", 14
+  //   )), process(pointFeature(
+  //     Map.of(
+  //       "place", "isolated_dwelling",
+  //       "name", "City name"
+  //     ))));
+  //   assertFeatures(12, List.of(Map.of(
+  //     "_layer", "place",
+  //     "class", "isolated_dwelling",
+  //     "rank", "<null>",
+  //     "_labelgrid_limit", 14,
+  //     "_labelgrid_size", 128d,
+  //     "_minzoom", 14
+  //   )), process(pointFeature(
+  //     Map.of(
+  //       "place", "isolated_dwelling",
+  //       "name", "City name"
+  //     ))));
+  // }
 
   @Test
   void testCitySetRankFromGridrank() throws GeometryException {

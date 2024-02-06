@@ -23,6 +23,29 @@ java -jar target/*with-deps.jar --force --download --area=monaco
 See [Planetiler README.md](https://github.com/onthegomap/planetiler/blob/main/README.md) for more description of the
 available options.
 
+## WeGlide custom build
+0. Clone repo and cd into root folder
+1. Set the ``simplify`` flag in ``Boundary.java`` and ``Place.java`` to the desired value
+2. Build from source (see instructions above)
+3. Run (maybe do a test run with ``--area=switzerland``)
+```bash
+java -Xmx20g \
+  jar target/*with-deps.jar --force  \
+  `# Download the latest planet.osm.pbf from s3://osm-pds bucket` \
+  --area=planet --bounds=planet --download \
+  `# Accelerate the download by fetching the 10 1GB chunks at a time in parallel` \
+  --download-threads=10 --download-chunk-size-mb=1000 \
+  `# Also download name translations from wikidata` \
+  --fetch-wikidata \
+  --output=output.mbtiles \
+  `# Store temporary node locations at fixed positions in a memory-mapped file` \
+  --nodemap-type=array --storage=mmap \
+  `# Configure layers and languages` \
+  --only-layers=boundary,water,place,waterway,mountain_peak,water_name --languages=
+```
+5. View tiles: ``npm install -g tileserver-gl-light && tileserver-gl --file output.mbtiles`` and visit http://localhost:8080
+
+
 ## Differences from OpenMapTiles
 
 - Road name abbreviations are not implemented yet in the `transportation_name` layer

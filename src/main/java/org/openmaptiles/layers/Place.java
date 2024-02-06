@@ -96,6 +96,7 @@ public class Place implements
    * and minimum zoom level to use for those points.
    */
 
+  private static final boolean simplify = true;
   private static final TreeMap<Double, Integer> ISLAND_AREA_RANKS = new TreeMap<>(Map.of(
     Double.MAX_VALUE, 3,
     squareMetersToWorldArea(40_000_000), 4,
@@ -340,31 +341,33 @@ public class Place implements
 
     PlaceType placeType = PlaceType.forName(element.place());
 
-    int minzoom = rank != null && rank == 1 ? 2 :
-      rank != null && rank <= 8 ? Math.max(3, rank - 1) :
-      placeType.ordinal() <= PlaceType.TOWN.ordinal() ? 7 :
-      placeType.ordinal() <= PlaceType.VILLAGE.ordinal() ? 8 :
-      placeType.ordinal() <= PlaceType.SUBURB.ordinal() ? 11 : 14;
+    if (simplify == false || (rank <= 8 || placeType.ordinal() <= PlaceType.CITY.ordinal())) {
+      int minzoom = rank != null && rank == 1 ? 2 :
+        rank != null && rank <= 8 ? Math.max(3, rank - 1) :
+        placeType.ordinal() <= PlaceType.TOWN.ordinal() ? 7 :
+        placeType.ordinal() <= PlaceType.VILLAGE.ordinal() ? 8 :
+        placeType.ordinal() <= PlaceType.SUBURB.ordinal() ? 11 : 14;
 
-    var feature = features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
-      .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
-      .setAttr(Fields.CLASS, element.place())
-      .setAttr(Fields.RANK, rank)
-      .setMinZoom(minzoom)
-      .setSortKey(getSortKey(rank, placeType, element.population(), element.name()))
-      .setPointLabelGridPixelSize(12, 128);
+      var feature = features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
+        .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
+        .setAttr(Fields.CLASS, element.place())
+        .setAttr(Fields.RANK, rank)
+        .setMinZoom(minzoom)
+        .setSortKey(getSortKey(rank, placeType, element.population(), element.name()))
+        .setPointLabelGridPixelSize(12, 128);
 
-    if (rank == null) {
-      feature.setPointLabelGridLimit(LABEL_GRID_LIMITS);
-    }
+      if (rank == null) {
+        feature.setPointLabelGridLimit(LABEL_GRID_LIMITS);
+      }
 
-    if (capital != null) { // with Java 18, we can handle that with "case null", see https://openjdk.org/jeps/420)
-      switch (capital) {
-        case "2", "yes" -> feature.setAttr(Fields.CAPITAL, 2);
-        case "3" -> feature.setAttr(Fields.CAPITAL, 3);
-        case "4" -> feature.setAttr(Fields.CAPITAL, 4);
-        case "5" -> feature.setAttr(Fields.CAPITAL, 5);
-        case "6" -> feature.setAttr(Fields.CAPITAL, 6);
+      if (capital != null) { // with Java 18, we can handle that with "case null", see https://openjdk.org/jeps/420)
+        switch (capital) {
+          case "2", "yes" -> feature.setAttr(Fields.CAPITAL, 2);
+          case "3" -> feature.setAttr(Fields.CAPITAL, 3);
+          case "4" -> feature.setAttr(Fields.CAPITAL, 4);
+          case "5" -> feature.setAttr(Fields.CAPITAL, 5);
+          case "6" -> feature.setAttr(Fields.CAPITAL, 6);
+        }
       }
     }
   }

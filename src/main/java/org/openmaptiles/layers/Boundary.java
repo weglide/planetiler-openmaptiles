@@ -116,6 +116,7 @@ public class Boundary implements
    * 5) Before emitting boundary lines, merge linestrings with the same tags.
    */
 
+  private static final boolean simplify = true;
   private static final Logger LOGGER = LoggerFactory.getLogger(Boundary.class);
   private static final double COUNTRY_TEST_OFFSET = GeoUtils.metersToPixelAtEquator(0, 10) / 256d;
   private final Stats stats;
@@ -247,7 +248,7 @@ public class Boundary implements
         }
       }
 
-      if (minAdminLevel <= 10) {
+      if ((simplify == false && minAdminLevel <= 10) || (simplify == true && minAdminLevel <= 4)) {
         boolean wayIsDisputed = isDisputed(feature.tags());
         disputed |= wayIsDisputed;
         if (wayIsDisputed) {
