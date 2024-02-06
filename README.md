@@ -30,20 +30,20 @@ available options.
 3. Run (maybe do a test run with ``--area=switzerland``)
 ```bash
 java -Xmx20g \
-  jar target/*with-deps.jar --force  \
+  -jar target/*with-deps.jar --force  \
   `# Download the latest planet.osm.pbf from s3://osm-pds bucket` \
   --area=planet --bounds=planet --download \
   `# Accelerate the download by fetching the 10 1GB chunks at a time in parallel` \
   --download-threads=10 --download-chunk-size-mb=1000 \
   `# Also download name translations from wikidata` \
   --fetch-wikidata \
-  --output=output.mbtiles \
+  --output=data/output.mbtiles \
   `# Store temporary node locations at fixed positions in a memory-mapped file` \
   --nodemap-type=array --storage=mmap \
   `# Configure layers and languages` \
   --only-layers=boundary,water,place,waterway,mountain_peak,water_name --languages=
 ```
-5. View tiles: ``npm install -g tileserver-gl-light && tileserver-gl --file output.mbtiles`` and visit http://localhost:8080
+5. View tiles: ``npm install -g tileserver-gl-light && tileserver-gl --file output.mbtiles`` and visit http://localhost:8080 --> you should be able to click
 
 
 ## Differences from OpenMapTiles

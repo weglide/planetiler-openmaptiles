@@ -96,7 +96,7 @@ public class Place implements
    * and minimum zoom level to use for those points.
    */
 
-  private static final boolean simplify = true;
+  private static boolean simplify = true;
   private static final TreeMap<Double, Integer> ISLAND_AREA_RANKS = new TreeMap<>(Map.of(
     Double.MAX_VALUE, 3,
     squareMetersToWorldArea(40_000_000), 4,
@@ -341,7 +341,9 @@ public class Place implements
 
     PlaceType placeType = PlaceType.forName(element.place());
 
-    if (simplify == false || (rank <= 8 || placeType.ordinal() <= PlaceType.CITY.ordinal())) {
+    boolean isAtLeastCity = (rank != null && rank <= 8) || placeType.ordinal() <= PlaceType.CITY.ordinal();
+
+    if (!simplify || isAtLeastCity) {
       int minzoom = rank != null && rank == 1 ? 2 :
         rank != null && rank <= 8 ? Math.max(3, rank - 1) :
         placeType.ordinal() <= PlaceType.TOWN.ordinal() ? 7 :
