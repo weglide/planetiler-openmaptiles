@@ -125,18 +125,18 @@ public class Landcover implements
     if (clazz != null) {
       features.polygon(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
         .setMinPixelSizeOverrides(MIN_PIXEL_SIZE_THRESHOLDS)
-        // default is 0.1, this helps reduce size of some heavy z7-10 tiles
+        // default is 0.1, this helps reduce size of some heavy z5-10 tiles
         .setPixelToleranceBelowZoom(10, 0.25)
         .setAttr(Fields.CLASS, clazz)
         .setAttr(Fields.SUBCLASS, subclass)
         .setNumPointsAttr(TEMP_NUM_POINTS_ATTR)
-        .setMinZoom(7);
+        .setMinZoom(5);
     }
   }
 
   @Override
   public List<VectorTile.Feature> postProcess(int zoom, List<VectorTile.Feature> items) throws GeometryException {
-    if (zoom < 7 || zoom > 13) {
+    if (zoom < 5 || zoom > 13) {
       for (var item : items) {
         item.attrs().remove(TEMP_NUM_POINTS_ATTR);
       }
@@ -167,7 +167,7 @@ public class Landcover implements
             } else { // don't merge
               result.add(item);
             }
-          } else { // zoom 7
+          } else { // zoom 5-7
             toMerge.add(item);
           }
         } else {
