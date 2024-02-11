@@ -24,8 +24,7 @@ See [Planetiler README.md](https://github.com/onthegomap/planetiler/blob/main/RE
 available options.
 
 ## WeGlide custom build
-0. Clone repo and cd into root folder
-1. Set the ``simplify`` flag in ``Boundary.java`` and ``Place.java`` to the desired value
+1. Clone repo and cd into root folder
 2. Build from source (see instructions above)
 3. Run (maybe do a test run with ``--area=switzerland``)
 ```bash
@@ -41,9 +40,14 @@ java -Xmx20g \
   `# Store temporary node locations at fixed positions in a memory-mapped file` \
   --nodemap-type=array --storage=mmap \
   `# Configure layers and languages` \
-  --only-layers=boundary,water,place,waterway,mountain_peak,water_name --languages=
+  --only-layers=boundary,water,place,waterway,mountain_peak,water_name --languages= --boundary_simplify=true --boundary_osm_only=true --place_simplify=true
 ```
-5. View tiles: ``npm install -g tileserver-gl-light && tileserver-gl --file output.mbtiles`` and visit http://localhost:8080 --> you should be able to click
+5. View tiles: ``npm install -g tileserver-gl-light && tileserver-gl-light --file data/output.mbtiles`` and visit http://localhost:8080 --> you should be able to click
+
+For testing use:
+```bash
+java -jar target/*with-deps.jar --force --area=switzerland --download --only-layers=boundary,water,place,waterway,mountain_peak,water_name --languages= --boundary_simplify=true --boundary_osm_only=true  --place_simplify=true
+```
 
 
 ## Differences from OpenMapTiles

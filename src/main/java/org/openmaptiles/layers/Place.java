@@ -96,7 +96,6 @@ public class Place implements
    * and minimum zoom level to use for those points.
    */
 
-  private static boolean simplify = true;
   private static final TreeMap<Double, Integer> ISLAND_AREA_RANKS = new TreeMap<>(Map.of(
     Double.MAX_VALUE, 3,
     squareMetersToWorldArea(40_000_000), 4,
@@ -116,6 +115,7 @@ public class Place implements
   ), 0);
   private final Translations translations;
   private final Stats stats;
+  private final boolean simplify;
   // spatial indexes for joining natural earth place labels with their corresponding points
   // from openstreetmap
   private PolygonIndex<NaturalEarthRegion> countries = PolygonIndex.create();
@@ -124,6 +124,11 @@ public class Place implements
 
   public Place(Translations translations, PlanetilerConfig config, Stats stats) {
     this.translations = translations;
+    this.simplify = config.arguments().getBoolean(
+      "place_simplify",
+      "place layer: only show cities and on higher zoom levels",
+      false
+    );
     this.stats = stats;
   }
 
@@ -270,7 +275,7 @@ public class Place implements
           .setAttr(Fields.RANK, rank)
           // TODO: This starts including every "state" point at z2, even before many countries show up.
           //       Instead we might want to set state min zooms based on rank from natural earth?
-          .setMinZoom(2)
+          .setMinZoom(simplify ? 5 : 2)
           .setSortKey(rank);
       }
     } catch (GeometryException e) {
@@ -349,6 +354,10 @@ public class Place implements
         placeType.ordinal() <= PlaceType.TOWN.ordinal() ? 7 :
         placeType.ordinal() <= PlaceType.VILLAGE.ordinal() ? 8 :
         placeType.ordinal() <= PlaceType.SUBURB.ordinal() ? 11 : 14;
+
+      if (simplify) {
+        minzoom = rank == 1 ? 4 : Math.max(5, rank + 1);
+      }
 
       var feature = features.point(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))

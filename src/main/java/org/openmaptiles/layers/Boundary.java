@@ -116,12 +116,12 @@ public class Boundary implements
    * 5) Before emitting boundary lines, merge linestrings with the same tags.
    */
 
-  private static boolean simplify = true;
   private static final Logger LOGGER = LoggerFactory.getLogger(Boundary.class);
   private static final double COUNTRY_TEST_OFFSET = GeoUtils.metersToPixelAtEquator(0, 10) / 256d;
   private final Stats stats;
   private final boolean addCountryNames;
   private final boolean onlyOsmBoundaries;
+  private final boolean simplify;
   // may be updated concurrently by multiple threads
   private final Map<Long, String> regionNames = new ConcurrentHashMap<>();
   // need to synchronize updates to these shared data structures:
@@ -139,6 +139,11 @@ public class Boundary implements
     this.onlyOsmBoundaries = config.arguments().getBoolean(
       "boundary_osm_only",
       "boundary layer: only use OSM, even at low zoom levels",
+      false
+    );
+    this.simplify = config.arguments().getBoolean(
+      "boundary_simplify",
+      "boundary layer: show fewer borders and stop at states",
       false
     );
     this.stats = stats;
@@ -248,24 +253,29 @@ public class Boundary implements
         }
       }
 
-      if ((!simplify && minAdminLevel <= 10) || (simplify && minAdminLevel <= 4)) {
+      boolean maritime = feature.getBoolean("maritime") ||
+        feature.hasTag("natural", "coastline") ||
+        feature.hasTag("boundary_type", "maritime");
+
+      if ((!simplify && minAdminLevel <= 10) || (simplify && minAdminLevel <= 4 && !maritime)) {
         boolean wayIsDisputed = isDisputed(feature.tags());
         disputed |= wayIsDisputed;
         if (wayIsDisputed) {
           disputedName = disputedName == null ? feature.getString("name") : disputedName;
           claimedBy = claimedBy == null ? feature.getString("claimed_by") : claimedBy;
         }
-        boolean maritime = feature.getBoolean("maritime") ||
-          feature.hasTag("natural", "coastline") ||
-          feature.hasTag("boundary_type", "maritime");
         int minzoom =
           (maritime && minAdminLevel == 2) ? 4 :
             minAdminLevel <= 4 ? 5 :
             minAdminLevel <= 6 ? 9 :
             minAdminLevel <= 8 ? 11 : 12;
-        if (onlyOsmBoundaries && minAdminLevel <= 4) {
+        if (onlyOsmBoundaries && minAdminLevel <= 4 && !simplify) {
           minzoom = minAdminLevel == 2 ? (maritime ? 4 : 0) : 1;
         }
+        if (onlyOsmBoundaries && minAdminLevel <= 4 && simplify) {
+          minzoom = minAdminLevel == 2 ? 3 : 6;
+        }
+
         if (addCountryNames && !regionIds.isEmpty()) {
           // save for later
           try {
