@@ -178,7 +178,7 @@ class WaterNameTest extends AbstractLayerTest {
       "name:es", "Mar Negro",
       "_layer", "water_name",
       "_type", "point",
-      "_minzoom", 1,
+      "_minzoom", 3,
       "_maxzoom", 14
     )), process(pointFeature(Map.of(
       "rank", 9,

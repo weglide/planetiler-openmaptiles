@@ -166,7 +166,7 @@ public class WaterName implements
       if ("ocean".equals(element.place())) {
         minZoom = 0;
       } else if ("sea".equals(element.place())) {
-        minZoom = Math.max(3, rank);
+        minZoom = Math.max(3, (rank == null ? 8 : rank));
       } else if (rank != null) {
         // FIXME: While this looks like matching properly stuff in https://github.com/openmaptiles/openmaptiles/pull/1457/files#diff-201daa1c61c99073fe3280d440c9feca5ed2236b251ad454caa14cc203f952d1R74 ,
         // it includes not just https://www.openstreetmap.org/relation/13360255 but also https://www.openstreetmap.org/node/1385157299 (and some others).

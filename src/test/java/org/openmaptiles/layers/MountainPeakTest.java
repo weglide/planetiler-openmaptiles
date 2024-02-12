@@ -59,7 +59,7 @@ class MountainPeakTest extends AbstractLayerTest {
       "_labelgrid_limit", 0
     )), peak);
     assertFeatures(13, List.of(Map.of(
-      "_labelgrid_limit", 5,
+      "_labelgrid_limit", 4,
       "_labelgrid_size", 100d
     )), peak);
   }

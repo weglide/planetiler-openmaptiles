@@ -105,7 +105,7 @@ class LandcoverTest extends AbstractLayerTest {
       "class", "wood",
       "_minpixelsize", 8d,
       "_numpointsattr", "_numpoints",
-      "_minzoom", 7,
+      "_minzoom", 5,
       "_maxzoom", 14
     )), process(polygonFeature(Map.of(
       "natural", "wood"
@@ -115,7 +115,7 @@ class LandcoverTest extends AbstractLayerTest {
       "subclass", "forest",
       "class", "wood",
       "_minpixelsize", 8d,
-      "_minzoom", 7,
+      "_minzoom", 5,
       "_maxzoom", 14
     )), process(polygonFeature(Map.of(
       "landuse", "forest"
@@ -125,7 +125,7 @@ class LandcoverTest extends AbstractLayerTest {
       "subclass", "dune",
       "class", "sand",
       "_minpixelsize", 4d,
-      "_minzoom", 7,
+      "_minzoom", 5,
       "_maxzoom", 14
     )), process(polygonFeature(Map.of(
       "natural", "dune"
@@ -181,11 +181,11 @@ class LandcoverTest extends AbstractLayerTest {
     assertMerges(List.of(map), List.of(
       feature(rectangle(10, 20), Map.of("_numpoints", 48, "subclass", "dune")),
       feature(rectangle(12, 18), Map.of("_numpoints", 301, "subclass", "dune"))
-    ), 7);
+    ), 6);
     assertMerges(List.of(map, map), List.of(
       feature(rectangle(10, 20), Map.of("_numpoints", 48, "subclass", "dune")),
       feature(rectangle(12, 18), Map.of("_numpoints", 301, "subclass", "dune"))
-    ), 6);
+    ), 4);
   }
 
 
