@@ -275,7 +275,7 @@ public class Place implements
           .setAttr(Fields.RANK, rank)
           // TODO: This starts including every "state" point at z2, even before many countries show up.
           //       Instead we might want to set state min zooms based on rank from natural earth?
-          .setMinZoom(simplify ? 6 : 2)
+          .setMinZoom(6)
           .setSortKey(rank);
       }
     } catch (GeometryException e) {
@@ -289,7 +289,7 @@ public class Place implements
     try {
       double area = element.source().area();
       int rank = ISLAND_AREA_RANKS.ceilingEntry(area).getValue();
-      int minzoom = rank <= 3 ? 8 : rank <= 4 ? 9 : 10;
+      int minzoom = rank <= 3 ? 9 : rank <= 4 ? 10 : 11;
 
       features.pointOnSurface(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
         .putAttrs(OmtLanguageUtils.getNames(element.source().tags(), translations))
@@ -350,10 +350,10 @@ public class Place implements
 
     if (!simplify || isAtLeastCity) {
       int minzoom = rank != null && rank == 1 ? 2 :
-        rank != null && rank <= 8 ? Math.max(3, rank - 1) :
-        placeType.ordinal() <= PlaceType.TOWN.ordinal() ? 7 :
-        placeType.ordinal() <= PlaceType.VILLAGE.ordinal() ? 8 :
-        placeType.ordinal() <= PlaceType.SUBURB.ordinal() ? 11 : 14;
+        rank != null && rank <= 8 ? Math.max(4, rank) :
+        placeType.ordinal() <= PlaceType.TOWN.ordinal() ? 8 :
+        placeType.ordinal() <= PlaceType.VILLAGE.ordinal() ? 9 :
+        placeType.ordinal() <= PlaceType.SUBURB.ordinal() ? 12 : 14;
 
       if (simplify && rank != null) {
         minzoom = rank == 1 ? 4 : Math.max(5, rank + 1);

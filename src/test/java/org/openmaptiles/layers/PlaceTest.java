@@ -177,7 +177,7 @@ class PlaceTest extends AbstractLayerTest {
       "rank", 1,
 
       "_type", "point",
-      "_minzoom", 2
+      "_minzoom", 6
     )), process(SimpleFeature.create(
       newPoint(0.1, 0.1),
       Map.of(
@@ -216,7 +216,7 @@ class PlaceTest extends AbstractLayerTest {
       "rank", 3,
 
       "_type", "point",
-      "_minzoom", 2
+      "_minzoom", 6
     )), process(SimpleFeature.create(
       newPoint(0.1, 0.1),
       Map.of(
@@ -261,7 +261,7 @@ class PlaceTest extends AbstractLayerTest {
       "rank", 3,
 
       "_type", "point",
-      "_minzoom", 8
+      "_minzoom", 9
     )), process(polygonFeatureWithArea(1,
       Map.of(
         "place", "island",
@@ -278,7 +278,7 @@ class PlaceTest extends AbstractLayerTest {
       "rank", 4,
 
       "_type", "point",
-      "_minzoom", 9
+      "_minzoom", 10
     )), process(polygonFeatureWithArea(rank4area,
       Map.of(
         "place", "island",
@@ -376,7 +376,7 @@ class PlaceTest extends AbstractLayerTest {
       "capital", 4,
 
       "_type", "point",
-      "_minzoom", 3
+      "_minzoom", 4
     )), process(pointFeature(
       Map.of(
         "place", "city",
@@ -451,7 +451,7 @@ class PlaceTest extends AbstractLayerTest {
       "capital", 6,
 
       "_type", "point",
-      "_minzoom", 6
+      "_minzoom", 7
     )), process(pointFeature(
       Map.of(
         "place", "city",
@@ -512,7 +512,7 @@ class PlaceTest extends AbstractLayerTest {
       "_layer", "place",
       "class", "city",
       "rank", "<null>",
-      "_minzoom", 7,
+      "_minzoom", 8,
       "_labelgrid_limit", 4,
       "_labelgrid_size", 128d
     )), process(pointFeature(
