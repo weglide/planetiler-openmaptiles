@@ -275,7 +275,7 @@ public class Place implements
           .setAttr(Fields.RANK, rank)
           // TODO: This starts including every "state" point at z2, even before many countries show up.
           //       Instead we might want to set state min zooms based on rank from natural earth?
-          .setMinZoom(simplify ? 5 : 2)
+          .setMinZoom(simplify ? 6 : 2)
           .setSortKey(rank);
       }
     } catch (GeometryException e) {
@@ -355,7 +355,7 @@ public class Place implements
         placeType.ordinal() <= PlaceType.VILLAGE.ordinal() ? 8 :
         placeType.ordinal() <= PlaceType.SUBURB.ordinal() ? 11 : 14;
 
-      if (simplify) {
+      if (simplify && rank != null) {
         minzoom = rank == 1 ? 4 : Math.max(5, rank + 1);
       }
 

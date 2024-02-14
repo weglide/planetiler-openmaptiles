@@ -40,13 +40,13 @@ java -Xmx20g \
   `# Store temporary node locations at fixed positions in a memory-mapped file` \
   --nodemap-type=array --storage=mmap \
   `# Configure layers and languages` \
-  --only-layers=boundary,water,place,waterway,mountain_peak,water_name --languages= --boundary_simplify=true --boundary_osm_only=true --place_simplify=true
+  --only-layers=boundary,water,place,waterway,mountain_peak,water_name --languages= --boundary_simplify=true --boundary_osm_only=true --place_simplify=true --simplify_tolerance=0.2
 ```
 5. View tiles: ``npm install -g tileserver-gl-light && tileserver-gl-light --file data/output.mbtiles`` and visit http://localhost:8080 --> you should be able to click
 
 For testing use:
 ```bash
-java -jar target/*with-deps.jar --force --area=switzerland --download --only-layers=boundary,water,place,waterway,mountain_peak,water_name --languages= --boundary_simplify=true --boundary_osm_only=true  --place_simplify=true
+java -jar target/*with-deps.jar --force --area=italy --download --only-layers=boundary,water,place,waterway,mountain_peak,water_name --languages= --boundary_simplify=true --boundary_osm_only=true  --place_simplify=true --simplify_tolerance=0.2
 ```
 
 
