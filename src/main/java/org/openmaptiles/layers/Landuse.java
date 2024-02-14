@@ -71,8 +71,13 @@ public class Landuse implements
 
   private static final ZoomFunction<Number> MIN_PIXEL_SIZE_THRESHOLDS = ZoomFunction.fromMaxZoomThresholds(Map.of(
     13, 4,
-    7, 2,
-    6, 1
+    12, 8,
+    11, 8,
+    10, 8,
+    9, 8,
+    8, 8,
+    7, 4,
+    6, 2
   ));
   private static final Set<String> Z6_CLASSES = Set.of(
     FieldValues.CLASS_RESIDENTIAL,
@@ -111,11 +116,11 @@ public class Landuse implements
       }
       var feature = features.polygon(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
         .setAttr(Fields.CLASS, clazz)
-        .setMinZoom(Z6_CLASSES.contains(clazz) ? 6 : 9);
+        .setMinZoom(Z6_CLASSES.contains(clazz) ? 6 : 8);
       if (FieldValues.CLASS_RESIDENTIAL.equals(clazz)) {
         feature
-          .setMinPixelSize(0.1)
-          .setPixelTolerance(0.25);
+          .setMinPixelSize(2)
+          .setPixelTolerance(0.35);
       } else {
         feature
           .setMinPixelSizeOverrides(MIN_PIXEL_SIZE_THRESHOLDS);

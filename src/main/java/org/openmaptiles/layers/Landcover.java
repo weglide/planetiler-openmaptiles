@@ -76,9 +76,14 @@ public class Landcover implements
    */
 
   public static final ZoomFunction<Number> MIN_PIXEL_SIZE_THRESHOLDS = ZoomFunction.fromMaxZoomThresholds(Map.of(
-    13, 8,
-    10, 4,
-    9, 2
+    13, 4,
+    12, 8,
+    11, 8,
+    10, 8,
+    9, 8,
+    8, 8,
+    7, 4,
+    6, 2
   ));
   private static final String TEMP_NUM_POINTS_ATTR = "_numpoints";
   private static final Set<String> WOOD_OR_FOREST = Set.of(
@@ -125,8 +130,8 @@ public class Landcover implements
     if (clazz != null) {
       features.polygon(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
         .setMinPixelSizeOverrides(MIN_PIXEL_SIZE_THRESHOLDS)
-        // default is 0.1, this helps reduce size of some heavy z5-10 tiles
-        .setPixelToleranceBelowZoom(10, 0.25)
+        // default is 0.1, this helps reduce size of some heavy z5-11 tiles
+        .setPixelToleranceBelowZoom(11, 0.35)
         .setAttr(Fields.CLASS, clazz)
         .setAttr(Fields.SUBCLASS, subclass)
         .setNumPointsAttr(TEMP_NUM_POINTS_ATTR)
@@ -153,21 +158,21 @@ public class Landcover implements
         Object subclassObj = attrs.get(Fields.SUBCLASS);
         if (numPointsObj instanceof Number num && subclassObj instanceof String subclass) {
           long numPoints = num.longValue();
-          if (zoom >= 10) {
+          if (zoom >= 12) {
             if (WOOD_OR_FOREST.contains(subclass) && numPoints < 300) {
               attrs.put(tempGroupKey, "<300");
               toMerge.add(item);
             } else { // don't merge
               result.add(item);
             }
-          } else if (zoom >= 8 && zoom <= 9) {
+          } else if (zoom >= 10 && zoom <= 11) {
             if (WOOD_OR_FOREST.contains(subclass)) {
               attrs.put(tempGroupKey, numPoints < 300 ? "<300" : ">300");
               toMerge.add(item);
             } else { // don't merge
               result.add(item);
             }
-          } else { // zoom 5-7
+          } else { // zoom 5-9
             toMerge.add(item);
           }
         } else {

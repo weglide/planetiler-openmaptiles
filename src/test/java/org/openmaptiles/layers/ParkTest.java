@@ -15,7 +15,7 @@ class ParkTest extends AbstractLayerTest {
       "class", "national_park",
       "name", "Grand Canyon National Park",
       "_minpixelsize", 2d,
-      "_minzoom", 4,
+      "_minzoom", 3,
       "_maxzoom", 14
     ), Map.of(
       "_layer", "park",
@@ -53,7 +53,7 @@ class ParkTest extends AbstractLayerTest {
       "class", "aboriginal_lands",
       "name", "Hualapai Tribe",
       "_minpixelsize", 2d,
-      "_minzoom", 4,
+      "_minzoom", 3,
       "_maxzoom", 14
     ), Map.of(
       "_layer", "park",
@@ -78,7 +78,7 @@ class ParkTest extends AbstractLayerTest {
       "class", "protected_area",
       "name", "Small park",
       "_minpixelsize", 2d,
-      "_minzoom", 4,
+      "_minzoom", 3,
       "_maxzoom", 14
     ), Map.of(
       "_layer", "park",

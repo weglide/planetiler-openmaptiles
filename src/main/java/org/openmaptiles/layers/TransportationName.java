@@ -111,8 +111,8 @@ public class TransportationName implements
     .put(7, 20_000)
     .put(8, 14_000)
     .put(9, 8_000)
-    .put(10, 4_000)
-    .put(11, 2_000);
+    .put(10, 6_000)
+    .put(11, 4_000);
   private final boolean brunnel;
   private final boolean sizeForShield;
   private final boolean limitMerge;
@@ -204,7 +204,7 @@ public class TransportationName implements
           .setAttr(Fields.SUBCLASS, subclass)
           .setAttr(Fields.LAYER, nullIfLong(element.layer(), 0))
           .setSortKeyDescending(element.zOrder())
-          .setMinZoom(10);
+          .setMinZoom(11);
       }
     }
   }

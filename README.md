@@ -27,6 +27,7 @@ available options.
 1. Clone repo and cd into root folder
 2. Build from source (see instructions above)
 3. Run (maybe do a test run with ``--area=switzerland``)
+Light build:
 ```bash
 java -Xmx20g \
   -jar target/*with-deps.jar --force  \
@@ -40,13 +41,43 @@ java -Xmx20g \
   `# Store temporary node locations at fixed positions in a memory-mapped file` \
   --nodemap-type=array --storage=mmap \
   `# Configure layers and languages` \
-  --only-layers=boundary,water,place,waterway,mountain_peak,water_name --languages= --boundary_simplify=true --boundary_osm_only=true --place_simplify=true --simplify_tolerance=0.2
+  --languages= 
+  --only-layers=boundary,water,place,waterway,mountain_peak,water_name 
+  --boundary_simplify=true
+  --boundary_osm_only=true
+  --place_simplify=true
+  --simplify_tolerance=0.2
+```
+Full build:
+```bash
+java -Xmx20g \
+  -jar target/*with-deps.jar --force  \
+  `# Download the latest planet.osm.pbf from s3://osm-pds bucket` \
+  --area=planet --bounds=planet --download \
+  `# Accelerate the download by fetching the 10 1GB chunks at a time in parallel` \
+  --download-threads=10 --download-chunk-size-mb=1000 \
+  `# Also download name translations from wikidata` \
+  --fetch-wikidata \
+  --output=data/output.mbtiles \
+  `# Store temporary node locations at fixed positions in a memory-mapped file` \
+  --nodemap-type=array --storage=mmap \
+  `# Configure layers and languages` \
+  --languages=en,de,fr,nl,dk,cs,it,pl,es,pt,uk,fi,no,sv,ja,zh
+  --only-layers=boundary,water,place,waterway,mountain_peak,water_name,landuse,landcover,park,transportation,transportation_name,aeroway
+  --boundary_osm_only=true
+  --place_simplify=false
+  --simplify_tolerance=0.2
 ```
 5. View tiles: ``npm install -g tileserver-gl-light && tileserver-gl-light --file data/output.mbtiles`` and visit http://localhost:8080 --> you should be able to click
 
 For testing use:
 ```bash
 java -jar target/*with-deps.jar --force --area=italy --download --only-layers=boundary,water,place,waterway,mountain_peak,water_name --languages= --boundary_simplify=true --boundary_osm_only=true  --place_simplify=true --simplify_tolerance=0.2
+```
+
+For full testing use:
+```bash
+java -jar target/*with-deps.jar --force --area=italy --download --only-layers=boundary,water,place,waterway,mountain_peak,water_name,landuse,landcover,park,transportation,transportation_name,aeroway --languages=en,de,fr,nl,dk,cs,it,pl,es,pt,uk,fi,no,sv,ja,zh --boundary_simplify=true --boundary_osm_only=true --place_simplify=false --simplify_tolerance=0.2
 ```
 
 

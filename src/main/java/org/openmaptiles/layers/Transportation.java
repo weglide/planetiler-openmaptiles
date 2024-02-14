@@ -184,15 +184,15 @@ public class Transportation implements
     MINZOOMS = Map.ofEntries(
       entry(FieldValues.CLASS_PATH, z13Paths ? 13 : 14),
       entry(FieldValues.CLASS_TRACK, 14),
-      entry(FieldValues.CLASS_SERVICE, 13),
-      entry(FieldValues.CLASS_MINOR, 13),
-      entry(FieldValues.CLASS_RACEWAY, 12),
-      entry(FieldValues.CLASS_TERTIARY, 11),
-      entry(FieldValues.CLASS_BUSWAY, 11),
-      entry(FieldValues.CLASS_BUS_GUIDEWAY, 11),
-      entry(FieldValues.CLASS_SECONDARY, 9),
-      entry(FieldValues.CLASS_PRIMARY, 7),
-      entry(FieldValues.CLASS_TRUNK, 5),
+      entry(FieldValues.CLASS_SERVICE, 14),
+      entry(FieldValues.CLASS_MINOR, 14),
+      entry(FieldValues.CLASS_RACEWAY, 13),
+      entry(FieldValues.CLASS_TERTIARY, 12),
+      entry(FieldValues.CLASS_BUSWAY, 12),
+      entry(FieldValues.CLASS_BUS_GUIDEWAY, 12),
+      entry(FieldValues.CLASS_SECONDARY, 10),
+      entry(FieldValues.CLASS_PRIMARY, 8),
+      entry(FieldValues.CLASS_TRUNK, 6),
       entry(FieldValues.CLASS_MOTORWAY, 4)
     );
   }
@@ -483,15 +483,15 @@ public class Transportation implements
 
     int minzoom;
     if ("pier".equals(element.manMade())) {
-      minzoom = 13;
+      minzoom = 14;
     } else if (isResidentialOrUnclassified(highway)) {
-      minzoom = 12;
+      minzoom = 13;
     } else {
       String baseClass = highwayClass.replace("_construction", "");
       minzoom = switch (baseClass) {
-        case FieldValues.CLASS_SERVICE -> isDrivewayOrParkingAisle(service(element.service())) ? 14 : 13;
-        case FieldValues.CLASS_TRACK, FieldValues.CLASS_PATH -> routeRank == 1 ? 12 :
-          (z13Paths || !nullOrEmpty(element.name()) || routeRank <= 2 || !nullOrEmpty(element.sacScale())) ? 13 : 14;
+        case FieldValues.CLASS_SERVICE -> isDrivewayOrParkingAisle(service(element.service())) ? 14 : 14;
+        case FieldValues.CLASS_TRACK, FieldValues.CLASS_PATH -> routeRank == 1 ? 13 :
+          (z13Paths || !nullOrEmpty(element.name()) || routeRank <= 2 || !nullOrEmpty(element.sacScale())) ? 14 : 14;
         case FieldValues.CLASS_TRUNK -> {
           // trunks in some networks to have same min. zoom as highway = "motorway"
           String clazz = routeRelations.stream()
@@ -583,7 +583,7 @@ public class Transportation implements
       .setAttr(Fields.LAYER, nullIfLong(element.layer(), 0))
       .setSortKey(element.zOrder())
       .setMinPixelSize(0) // merge during post-processing, then limit by size
-      .setMinZoom(4)
+      .setMinZoom(6)
       .setMinPixelSizeBelowZoom(10, 32); // `sql_filter: ST_Length(...)` used in OpenMapTiles translates to 32px
   }
 

@@ -44,7 +44,7 @@ class LanduseTest extends AbstractLayerTest {
         "_layer", "landuse",
         "class", "railway",
         "_minpixelsize", 4d,
-        "_minzoom", 9,
+        "_minzoom", 8,
         "_maxzoom", 14
       )), process(polygonFeature(Map.of(
         "landuse", "railway",
@@ -54,7 +54,7 @@ class LanduseTest extends AbstractLayerTest {
       "_layer", "landuse",
       "class", "school",
       "_minpixelsize", 4d,
-      "_minzoom", 9,
+      "_minzoom", 8,
       "_maxzoom", 14
     )), process(polygonFeature(Map.of(
       "amenity", "school"
@@ -80,7 +80,7 @@ class LanduseTest extends AbstractLayerTest {
       "class", "suburb",
       "_minzoom", 6,
       "_maxzoom", 14,
-      "_minpixelsize", 1d
+      "_minpixelsize", 2d
     )), process(polygonFeature(Map.of(
       "place", "suburb"
     ))));
@@ -89,7 +89,7 @@ class LanduseTest extends AbstractLayerTest {
       "class", "residential",
       "_minzoom", 6,
       "_maxzoom", 14,
-      "_minpixelsize", 0.1d
+      "_minpixelsize", 2d
     )), process(polygonFeature(Map.of(
       "landuse", "residential"
     ))));

@@ -110,7 +110,7 @@ public class Park implements
     var outline = features.polygon(LAYER_NAME).setBufferPixels(BUFFER_SIZE)
       .setAttrWithMinzoom(Fields.CLASS, clazz, 5)
       .setMinPixelSize(2)
-      .setMinZoom(4);
+      .setMinZoom(3);
 
     // park name label point (if it has one)
     if (element.name() != null) {
