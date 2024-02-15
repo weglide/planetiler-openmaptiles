@@ -41,11 +41,11 @@ java -Xmx20g \
   `# Store temporary node locations at fixed positions in a memory-mapped file` \
   --nodemap-type=array --storage=mmap \
   `# Configure layers and languages` \
-  --languages= 
-  --only-layers=boundary,water,place,waterway,mountain_peak,water_name 
-  --boundary_simplify=true
-  --boundary_osm_only=true
-  --place_simplify=true
+  --languages= \
+  --only-layers=boundary,water,place,waterway,mountain_peak,water_name \
+  --boundary_simplify=true \
+  --boundary_osm_only=true \
+  --place_simplify=true \
   --simplify_tolerance=0.2
 ```
 Full build:
@@ -62,11 +62,11 @@ java -Xmx20g \
   `# Store temporary node locations at fixed positions in a memory-mapped file` \
   --nodemap-type=array --storage=mmap \
   `# Configure layers and languages` \
-  --languages=en,de,fr,nl,dk,cs,it,pl,es,pt,uk,fi,no,sv,ja,zh
-  --only-layers=boundary,water,place,waterway,mountain_peak,water_name,landuse,landcover,park,transportation,transportation_name,aeroway
-  --boundary_osm_only=true
-  --place_simplify=false
-  --simplify_tolerance=0.2
+  --languages=en,de,fr,nl,dk,cs,it,pl,es,pt,uk,fi,no,sv,ja,zh \
+  --only-layers=boundary,water,place,waterway,mountain_peak,water_name,landuse,landcover,park,transportation,transportation_name,aeroway \
+  --boundary_osm_only=true \
+  --place_simplify=false \
+  --simplify_tolerance=0.2 \
 ```
 5. View tiles: ``npm install -g tileserver-gl-light && tileserver-gl-light --file data/output.mbtiles`` and visit http://localhost:8080 --> you should be able to click
 
