@@ -64,9 +64,10 @@ java -Xmx20g \
   `# Configure layers and languages` \
   --languages=en,de,fr,nl,dk,cs,it,pl,es,pt,uk,fi,no,sv,ja,zh \
   --only-layers=boundary,water,place,waterway,mountain_peak,water_name,landuse,landcover,park,transportation,transportation_name,aeroway \
+  --boundary_simplify=true \
   --boundary_osm_only=true \
   --place_simplify=false \
-  --simplify_tolerance=0.2 
+  --simplify_tolerance=0.2
 ```
 5. View tiles: ``npm install -g tileserver-gl-light && tileserver-gl-light --file data/output.mbtiles`` and visit http://localhost:8080 --> you should be able to click
 
